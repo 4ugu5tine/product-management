@@ -1,28 +1,31 @@
 package org.edem.productmanagement.dto;
 
-import lombok.Builder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
-import static org.edem.productmanagement.utils.Validator.*;
-@Builder
-public record CreateProductRequest(
+import static org.edem.productmanagement.utils.Validator.FIELD_IS_REQUIRED;
+
+public record CreateUserRequest(
         @NotNull(message = FIELD_IS_REQUIRED)
         @NotBlank(message = FIELD_IS_REQUIRED)
-        String productName,
-
-        @NotNull(message = FIELD_IS_REQUIRED)
-        @NotBlank(message = FIELD_IS_REQUIRED)
-        String description,
+        String firstName,
 
         @NotNull(message = FIELD_IS_REQUIRED)
         @NotBlank(message = FIELD_IS_REQUIRED)
-        double price,
+        String lastName,
 
         @NotNull(message = FIELD_IS_REQUIRED)
         @NotBlank(message = FIELD_IS_REQUIRED)
-        String categoryName
+        String email,
+
+        @NotNull(message = FIELD_IS_REQUIRED)
+        @NotBlank(message = FIELD_IS_REQUIRED)
+        String password,
+
+        @NotNull(message = FIELD_IS_REQUIRED)
+        @NotBlank(message = FIELD_IS_REQUIRED)
+        String phone
 ) {
+
 }

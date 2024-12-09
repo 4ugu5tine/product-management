@@ -13,11 +13,34 @@ public class GlobalException {
 
     @ExceptionHandler(CategoryNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleCategoryNotFoundException(CategoryNotFoundException exception){
-        ErrorResponse response = new ErrorResponse(
-                exception.getMessage(),
-                LocalDateTime.now(),
-                "Could not find the requested category");
+        ErrorResponse response = ErrorResponse.builder()
+                .message(exception.getMessage())
+                .timestamp(LocalDateTime.now())
+                .detail("Category not found")
+                .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductNotFoundException exception){
+        ErrorResponse response = ErrorResponse.builder()
+                .message(exception.getMessage())
+                .timestamp(LocalDateTime.now())
+                .detail("Product not found")
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(ProductNotFoundException exception){
+        ErrorResponse response = ErrorResponse.builder()
+                .message(exception.getMessage())
+                .timestamp(LocalDateTime.now())
+                .detail("User not found")
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    };
+
 
 }

@@ -1,6 +1,8 @@
 package org.edem.productmanagement.controller;
 
 import org.edem.productmanagement.dto.CreateProductRequest;
+import org.edem.productmanagement.dto.ProductResponse;
+import org.edem.productmanagement.dto.UpdateProductRequest;
 import org.edem.productmanagement.entities.Product;
 import org.edem.productmanagement.service.ProductService;
 import org.springframework.data.domain.Page;
@@ -25,9 +27,24 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public Page<Product> getProducts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public Page<ProductResponse> getProducts(@RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size){
+
         return productService.getAllProducts(page,size);
     }
 
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<Void> updateProduct(@PathVariable("id") Long id , @RequestBody UpdateProductRequest request){
+        productService.updateProduct(id,request);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 
+
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id){
+        productService.deleteProduct(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
+

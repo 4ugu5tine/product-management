@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
 @Builder
@@ -26,7 +25,7 @@ public class Product {
     private String description;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private double price;
 
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
@@ -50,10 +49,13 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Product(String name, String description, BigDecimal price, Category category) {
+    public Product(String name, String description, double price, Category category) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
+    }
+
+    public Product() {
     }
 }
