@@ -29,9 +29,11 @@ public class ProductController {
 
     @GetMapping("/all")
     public Page<ProductResponse> getProducts(@RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "10") int size){
+                                             @RequestParam(defaultValue = "10") int size,
+                                             @RequestParam(defaultValue = "asc") String direction,
+                                             @RequestParam(defaultValue = "name") String sortBy){
 
-        return productService.getAllProducts(page,size);
+        return productService.getAllProducts(page,size,direction,sortBy);
     }
 
     @PatchMapping("/update/{id}")
@@ -52,9 +54,11 @@ public class ProductController {
     public Page<ProductResponse> search(
             @PathVariable("keyword") String keyword,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size){
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(defaultValue = "name") String sortBy){
 
-        return productService.search(keyword,page,size);
+        return productService.search(keyword,page,size,direction,sortBy);
     }
 }
 

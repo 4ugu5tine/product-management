@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "productName": "DAMN",
-  "description": "Kendrick album",
+  "description": "another kendrick album ",
   "price": 20.00,
   "categoryName": "music"
 }
@@ -32,7 +32,7 @@ POST http://localhost:8080/api/v1/category/new-category
 Content-Type: application/json
 
 {
-  "categoryName": "Music"
+  "categoryName": "music"
 }
 
 ###
@@ -43,7 +43,7 @@ GET http://localhost:8080/api/v1/category/all
 DELETE localhost:8080/api/v1/category/delete/2
 
 ###
-GET http://localhost:8080/api/v1/category/3/products
+GET http://localhost:8080/api/v1/category/1/products
 
 
 ###

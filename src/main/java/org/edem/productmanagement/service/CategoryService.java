@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 
 public interface CategoryService {
     ResponseMessage createCategory(CreateCategoryRequest request);
-    Page<CategoryResponse> getAllCategories(int page, int size);
+    Page<CategoryResponse> getAllCategories(int page, int size, String direction , String sortBy);
     ResponseMessage deleteCategory(Long id);
 
     Page<ProductResponse> getCategoryProducts(Long id, int page, int size, String direction , String sortBy);

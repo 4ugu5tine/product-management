@@ -31,8 +31,10 @@ public class CategoryController {
     @Operation(summary = "Get all Categories")
     @GetMapping("/all")
     public Page<CategoryResponse> getCategories(@RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "10") int size){
-        return categoryService.getAllCategories(page,size);
+                                                @RequestParam(defaultValue = "10") int size,
+                                                @RequestParam(defaultValue = "asc") String direction,
+                                                @RequestParam(defaultValue = "name") String sortBy){
+        return categoryService.getAllCategories(page,size,direction,sortBy);
     }
 
     @Operation(summary = "Delete category")

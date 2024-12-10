@@ -14,6 +14,7 @@ import org.edem.productmanagement.repository.CategoryRepository;
 import org.edem.productmanagement.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -49,11 +50,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Page<ProductResponse> getAllProducts(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Page<ProductResponse> products = productRepository.findAllProducts(pageRequest);
-        log.info("Found {} entries",products.getTotalElements());
-        return products;
+    public Page<ProductResponse> getAllProducts(int page, int size, String direction, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(direction);
+        PageRequest pageRequest = PageRequest.of(page, size,Sort.by(sortDirection, sortBy));
+//        log.info("Found {} entries",products.getTotalElements());
+        return productRepository.findAllProducts(pageRequest);
     }
 
     @Override
@@ -89,7 +90,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Page<ProductResponse> search(String keyword, int page, int size) {
+    public Page<ProductResponse> search(String keyword, int page, int size, String direction, String sortBy) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<ProductResponse> products = productRepository.searchProduct(keyword, pageRequest);
 

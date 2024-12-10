@@ -91,8 +91,9 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Page<CategoryResponse> getAllCategories(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+    public Page<CategoryResponse> getAllCategories(int page, int size, String direction, String sortBy) {
+        Sort.Direction sortDirection = Sort.Direction.fromString(direction);
+        PageRequest pageRequest = PageRequest.of(page, size,Sort.by(sortDirection, sortBy));
         return categoryRepository.findAllCategories(pageRequest);
     }
 
