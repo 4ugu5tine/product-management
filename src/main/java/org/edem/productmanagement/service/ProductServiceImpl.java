@@ -2,9 +2,10 @@ package org.edem.productmanagement.service;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.edem.productmanagement.dto.ProductResponse;
-import org.edem.productmanagement.dto.CreateProductRequest;
-import org.edem.productmanagement.dto.UpdateProductRequest;
+import org.edem.productmanagement.dto.ResponseMessage;
+import org.edem.productmanagement.dto.product.ProductResponse;
+import org.edem.productmanagement.dto.product.CreateProductRequest;
+import org.edem.productmanagement.dto.product.UpdateProductRequest;
 import org.edem.productmanagement.entities.Category;
 import org.edem.productmanagement.entities.Product;
 import org.edem.productmanagement.exception.CategoryNotFoundException;
@@ -15,8 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import static org.edem.productmanagement.utils.Validator.*;
 
 @Slf4j
 @Service
@@ -30,7 +32,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product createProduct( CreateProductRequest request) {
+    public ResponseMessage createProduct(CreateProductRequest request) {
         Category category = categoryRepository.findByNameIgnoreCase(request.categoryName())
                 .orElseThrow(()-> new CategoryNotFoundException("Category not found"));
 
@@ -38,23 +40,24 @@ public class ProductServiceImpl implements ProductService{
                 .name(request.productName())
                 .category(category)
                 .price(request.price())
+                .description(request.description())
                 .createdAt(LocalDateTime.now())
                 .build();
         productRepository.save(product);
         log.info("created product {} successfully", product.getName());
-        return product;
+        return new ResponseMessage(PRODUCT_CREATED);
     }
 
     @Override
     public Page<ProductResponse> getAllProducts(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<ProductResponse> products = productRepository.findAllProducts(pageRequest);
-        log.info("Found {} entries",size);
+        log.info("Found {} entries",products.getTotalElements());
         return products;
     }
 
     @Override
-    public void updateProduct(Long id, UpdateProductRequest request) {
+    public ResponseMessage updateProduct(Long id, UpdateProductRequest request) {
         Product product = productRepository.findById(id).orElseThrow(()-> new ProductNotFoundException("No product found"));
 
         if(request.productName() != null && !request.productName().isEmpty())
@@ -74,13 +77,24 @@ public class ProductServiceImpl implements ProductService{
         productRepository.save(product);
 
         log.info("updated product {} successfully", product.getId());
+        return new ResponseMessage(UPDATE_SUCCESSFUL);
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public ResponseMessage deleteProduct(Long id) {
         Product product = productRepository.findById(id).orElseThrow(()-> new ProductNotFoundException("Product not found"));
         productRepository.delete(product);
         log.info("deleted product {}", product.getName());
+        return new ResponseMessage(DELETE_PRODUCT_SUCCESSFULLY);
+    }
+
+    @Override
+    public Page<ProductResponse> search(String keyword, int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<ProductResponse> products = productRepository.searchProduct(keyword, pageRequest);
+
+        log.info("Found {} entries", products.getTotalElements());
+        return products;
     }
 
 }

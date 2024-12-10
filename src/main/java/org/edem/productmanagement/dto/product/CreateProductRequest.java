@@ -1,10 +1,9 @@
-package org.edem.productmanagement.dto;
+package org.edem.productmanagement.dto.product;
 
 import lombok.Builder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 import static org.edem.productmanagement.utils.Validator.*;
 @Builder

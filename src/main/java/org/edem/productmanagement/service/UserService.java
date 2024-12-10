@@ -1,10 +1,13 @@
 package org.edem.productmanagement.service;
 
-import org.edem.productmanagement.dto.CreateUserRequest;
-import org.edem.productmanagement.entities.User;
-import org.springframework.stereotype.Service;
+import org.edem.productmanagement.dto.ResponseMessage;
+import org.edem.productmanagement.dto.auth.LoginRequest;
+import org.edem.productmanagement.dto.auth.SignUpRequest;
+import org.edem.productmanagement.dto.auth.UserResponse;
 
 public interface UserService {
-    User createUser (CreateUserRequest request);
+    ResponseMessage createUser (SignUpRequest request);
+
+    UserResponse login (LoginRequest request);
 
 }

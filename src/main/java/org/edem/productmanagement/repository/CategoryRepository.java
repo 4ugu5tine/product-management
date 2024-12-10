@@ -1,7 +1,6 @@
 package org.edem.productmanagement.repository;
 
-import org.edem.productmanagement.dto.CategoryResponse;
-import org.edem.productmanagement.dto.ProductResponse;
+import org.edem.productmanagement.dto.categoty.CategoryResponse;
 import org.edem.productmanagement.entities.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

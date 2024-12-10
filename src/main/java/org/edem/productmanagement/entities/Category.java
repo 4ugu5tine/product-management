@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @Entity
+@Data
 public class Category {
 
     @Id
@@ -22,11 +23,26 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "parent_id", nullable = true)
+    private Category parent;
+
+    @ManyToOne
+    @JoinColumn(name = "left_child_id", nullable = true)
+    private Category leftPosition;
+
+    @ManyToOne
+    @JoinColumn(name = "right_child_id", nullable = true)
+    private Category rightPosition;
+
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    private boolean isDeleted;
 
 
     @PrePersist
