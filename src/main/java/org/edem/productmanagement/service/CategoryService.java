@@ -1,15 +1,15 @@
 package org.edem.productmanagement.service;
 
-import org.edem.productmanagement.dto.CategoryResponse;
-import org.edem.productmanagement.dto.CreateCategoryRequest;
-import org.edem.productmanagement.dto.ProductResponse;
-import org.edem.productmanagement.entities.Product;
+import org.edem.productmanagement.dto.ResponseMessage;
+import org.edem.productmanagement.dto.categoty.CategoryResponse;
+import org.edem.productmanagement.dto.categoty.CreateCategoryRequest;
+import org.edem.productmanagement.dto.product.ProductResponse;
 import org.springframework.data.domain.Page;
 
 public interface CategoryService {
-    void createCategory(CreateCategoryRequest request);
+    ResponseMessage createCategory(CreateCategoryRequest request);
     Page<CategoryResponse> getAllCategories(int page, int size);
-    void deleteCategory(Long id);
+    ResponseMessage deleteCategory(Long id);
 
-    Page<ProductResponse> getCategoryProducts(Long id, int page, int size);
+    Page<ProductResponse> getCategoryProducts(Long id, int page, int size, String direction , String sortBy);
 }

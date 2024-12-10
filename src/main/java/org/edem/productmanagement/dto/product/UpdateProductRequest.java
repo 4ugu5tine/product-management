@@ -1,4 +1,4 @@
-package org.edem.productmanagement.dto;
+package org.edem.productmanagement.dto.product;
 
 
 

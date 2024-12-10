@@ -1,8 +1,9 @@
 package org.edem.productmanagement.controller;
 
-import org.edem.productmanagement.dto.CreateProductRequest;
-import org.edem.productmanagement.dto.ProductResponse;
-import org.edem.productmanagement.dto.UpdateProductRequest;
+import org.edem.productmanagement.dto.ResponseMessage;
+import org.edem.productmanagement.dto.product.CreateProductRequest;
+import org.edem.productmanagement.dto.product.ProductResponse;
+import org.edem.productmanagement.dto.product.UpdateProductRequest;
 import org.edem.productmanagement.entities.Product;
 import org.edem.productmanagement.service.ProductService;
 import org.springframework.data.domain.Page;
@@ -21,9 +22,9 @@ public class ProductController {
     }
 
     @PostMapping("/new-product")
-    public ResponseEntity<Product> createProduct(@RequestBody CreateProductRequest request){
-        productService.createProduct(request);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseMessage createProduct(@RequestBody CreateProductRequest request){
+        return productService.createProduct(request);
     }
 
     @GetMapping("/all")
@@ -34,17 +35,27 @@ public class ProductController {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<Void> updateProduct(@PathVariable("id") Long id , @RequestBody UpdateProductRequest request){
-        productService.updateProduct(id,request);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseMessage updateProduct(@PathVariable("id") Long id , @RequestBody UpdateProductRequest request){
+        return productService.updateProduct(id,request);
     }
 
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id){
-        productService.deleteProduct(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseMessage deleteProduct(@PathVariable("id") Long id){
+        return productService.deleteProduct(id);
+    }
+
+    @GetMapping("/{keyword}")
+    public Page<ProductResponse> search(
+            @PathVariable("keyword") String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+
+        return productService.search(keyword,page,size);
     }
 }
+
 
